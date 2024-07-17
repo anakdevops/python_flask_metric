@@ -7,7 +7,7 @@ REQUEST_COUNT = Counter('request_count','Total request count')
 
 @app.route('/')
 def home():
-  REQUEST_COUNT.incl()
+  REQUEST_COUNT.inc()
   return "Hello World"
 
 @app.route('/metrics')
@@ -15,4 +15,4 @@ def metrics():
   return generate_latest(), 200,{'Contenct-Type':'text/plain; charset=utf-8'}
 
 if __name__ == '__main__':
-  app.run(host=0.0.0.0', port=5000)
+  app.run(host='0.0.0.0', port=5000)
