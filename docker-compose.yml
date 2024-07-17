@@ -1,31 +1,31 @@
 version: '3.7'
 
 services:
- web:
-  build: .
-  ports:
-   - "5000:5000"
-  networks:
-   - monitoring
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - monitoring
 
   prometheus:
-   image: prom/prometheus
-   volumes:
-    - prometheus.yml
-   command:
-    - '--config.file=/etc/prometheus/prometheus.yml'
-   ports:
-    - "9090:9090"
-   networks:
-    - monitoring
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
 
   grafana:
-   image: grafana/grafana
-   ports:
-    - "3000:3000"
-   networks:
-    - monitoring
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
 
 networks:
- monitoring:
-  driver: bridge
+  monitoring:
+    driver: bridge
