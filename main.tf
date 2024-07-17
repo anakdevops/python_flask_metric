@@ -78,7 +78,7 @@ resource "aws_security_group" "anakdevops_sg" {
 }
 
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "345kjh345kj"
+  bucket = "bucketpython435we"
 }
 
 resource "aws_instance" "ec2_anakdevops" {
@@ -95,9 +95,7 @@ resource "aws_instance" "ec2_anakdevops" {
  user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
-              sudo apt-get install -y s3fs docker.io docker-compose git
-              sudo usermod -aG docker ubuntu
-              sudo systemctl enable docker
+              sudo apt-get install -y s3fs git docker.io
               sudo systemctl start docker
               echo "${var.access_key}:${var.secret_key}" > /etc/passwd-s3fs
               sudo chown root:root /etc/passwd-s3fs
@@ -106,10 +104,13 @@ resource "aws_instance" "ec2_anakdevops" {
               echo "s3fs#${aws_s3_bucket.my_bucket.bucket} /mnt/s3-bucket fuse _netdev,allow_other 0 0" | sudo tee -a /etc/fstab
               sudo systemctl daemon-reload
               sudo mount -a
+              sudo mkdir -p /usr/local/lib/docker/cli-plugins
+              sudo curl -SL https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
+              chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
               cd /mnt/s3-bucket
               git clone https://github.com/adylimmo/python_flask_metric.git
               cd python_flask_metric
-              sudo docker-compose up -d
+              docker compose up -d
               EOF
 
 }
