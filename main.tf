@@ -108,7 +108,7 @@ resource "aws_instance" "ec2_anakdevops" {
               sudo curl -SL https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
               chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
               cd /mnt/s3-bucket
-              git clone https://github.com/adylimmo/python_flask_metric.git
+              git clone https://github.com/anakdevops/python_flask_metric.git
               cd python_flask_metric
               docker compose up -d
               EOF
